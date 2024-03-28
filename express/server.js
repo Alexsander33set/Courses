@@ -2,12 +2,13 @@
 import express from "express";
 const APP = express();
 const PORT = 8080
-/* ---------- EXEMPLE PARAMETRO ---------- */
-// APP.get("/:name?", (req, res) =>{
-//   let name = (req.params.name)
+
+/* ---------- EXAMPLE PARAMETER ---------- */
+APP.get("/:name?", (req, res) =>{
+  let name = (req.params.name)
   
-//   res.send(`EAE ${name} SEU FDPutinha`);
-// })
+  res.send(`<h3>aopa ${name}</h3>`);
+})
 
 APP.listen(PORT, (err)=>{
   if (err) {
