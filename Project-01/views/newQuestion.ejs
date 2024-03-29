@@ -1,0 +1,39 @@
+<%- include ('layout/head.ejs'); %>
+<%- include ('layout/header.ejs'); %>
+  
+<main class="container">
+  <h1>AskMe Anything!</h1>
+  <div class="card">
+    <div class="card-header">
+      <h3>New Question</h3>
+    </div>
+    
+    <div class="card-body">
+      <form action="/post-question" method="post">
+        <!-- nq-title -->
+        <div>
+        <label for="nq-title">Title</label>
+        <input type="text"
+          id="nq-title"
+          name="nq-title"
+          class="form-control"
+          placeholder="Title"
+        >
+        </div>
+        <br>
+        <!-- nq-question -->
+        <div>
+          <label for="nq-question">Question</label>
+          <textarea name="nq-question" id="nq-question" 
+            class="form-control"
+            placeholder="Put your question here..."
+            resizable
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary nq-submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+  <%- include ('layout/footer.ejs'); %>
