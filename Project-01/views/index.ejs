@@ -1,8 +1,26 @@
 <%- include ('layout/head.ejs'); %>
 <%- include ('layout/header.ejs'); %>
   
-<main class="container">
-  main
+<main class="container p-4">
+  <div class="title d-flex align-items-center">
+    <h3>Ask me Anything!</h3>
+    <a href="/new-question" class="ml-2 p-1 px-2 border border-primary rounded-sm"><span class="">+</span> Add question</a>
+  </div>
+  
+  <% questions.forEach( function(question) { %>
+  <div class="card p-3 my-3">
+    <div class="card-title">
+      <h4><%= question.title %></h4>
+    </div>
+    <div class="card-body">
+      <p><%= question.question %></p>
+    </div>
+    <div class="card-footer">
+      <a href="/question/<%= question.id %>"><button class="btn btn-primary" href="#">View comments</button></a>
+    </div>
+  </div>
+  <% }) %>
+
 </main>
 
 <%- include ('layout/footer.ejs'); %>

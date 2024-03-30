@@ -1,8 +1,12 @@
 <%- include ('layout/head.ejs'); %>
 <%- include ('layout/header.ejs'); %>
 
-<main class="container">
-  <p><%= error %></p>
+<main class="container m-5">
+  <% if (error) { %>
+    <h3><%= error %> <a href="/" class="btn btn-primary"> return</a></h3>
+    <% } else { %>
+    <h3>No errors detected!</h3>
+    <% } %>
 </main>
 
 <%- include ('layout/footer.ejs'); %>

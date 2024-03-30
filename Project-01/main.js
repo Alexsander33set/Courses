@@ -1,9 +1,11 @@
-import express from "express";
+import express, { query } from "express";
 import bodyParser from "body-parser";
+import { Sequelize, where } from "sequelize";
 import 'dotenv/config';
 
 import connection from './db/database.js';
-import "./db/Question.js";
+import Question from "./db/Question.js";
+import Answers from "./db/Answers.js";
 
 connection
   .authenticate()
@@ -15,12 +17,8 @@ connection
   })
 
 
-
-
-
-
 const app = express()
-const PORT = 8080
+const PORT = 8000
 const ROUTE = "http://127.0.0.1:" + PORT
 
 //* EJS Config
@@ -33,20 +31,68 @@ app.use(bodyParser.json())
 
 //* ROUTES ------------------------
 app.get("/", (req, res) => {
-  res.render("index")
+  Question.findAll({raw: true, order:[["updatedAt", "DESC"]]})
+  .then((response)=>{
+    res.render("index", {
+      questions: response
+    })
+  })
+
+})
+
+app.get("/question/:id?", (req, res) => {
+  let questionID = req.params.id
+  Question.findOne({where:{id: questionID}})
+  .then((response)=>{
+    !response ? res.redirect("/error?error=Error! Question not founded!"):
+    
+    Answers.findAll({
+      where: {questionID: questionID},
+      raw: true,
+      order:[["updatedAt", "DESC"]]
+    }).then((answers)=>{
+      res.render("questionSelected", {
+        question: response,
+        answers : answers
+      })
+    })
+  })
+
 })
 
 app.get("/new-question", (req, res) => {
   res.render("newQuestion")
 })
 
-app.post("/post-question?msg=Question%20created!", (req, res) => {
-let data = req.body
+app.get("/get-questions", (req, res) => {
+  console.log("───────────── get-questions called ─────────────")
+  Question.findAll({raw: true})
+  .then((response)=>{
+    console.log(response);
+    res.json(response)
+  })
+})
 
-console.log("───────────── post-question called ─────────────")
-console.log(data);
+app.post("/post-question", (req, res) => {
+  console.log("───────────── post-question called ─────────────")
+  let data = req.body
+  Question.create({
+    title: data.nqTitle,
+    question: data.nqQuestion,
+  }).then(()=>{
+    res.redirect("/")
+  })
+})
 
-res.redirect("/")
+app.post("/post-answer", (req, res) => {
+  console.log("───────────── post-answer called ─────────────")
+  let data = req.body
+  Answers.create({
+    questionID: data.questionID,
+    answer: data.answer,
+  }).then(()=>{
+    res.redirect("/question/"+data.questionID)
+  })
 })
 
 app.get("/error", (req, res) => {
