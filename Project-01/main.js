@@ -18,7 +18,7 @@ connection
 
 
 const app = express()
-const PORT = 8000
+const PORT = 80
 const ROUTE = "http://127.0.0.1:" + PORT
 
 //* EJS Config

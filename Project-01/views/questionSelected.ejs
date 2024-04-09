@@ -16,7 +16,6 @@
       <p><%= question.question %></p>
     </div>
     <div class="card-footer">
-      <h5 class="mb-2">Answers</h5>
       <form action="/post-answer" method="post">
         <textarea 
         class="form-control" 
@@ -27,6 +26,7 @@
       <input type="hidden" name="questionID" value="<%= question.id %>">
       </form>
     </div>
+    <h5 class="mt-2">Answers</h5>
     <div class="answers pt-3">
       <% answers.forEach( function(answer) { %>
         <div class="d-flex justify-content-between mx-1">
