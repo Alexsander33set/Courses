@@ -1,17 +1,22 @@
 import { Sequelize } from "sequelize";
 import connection from "./database.js";
+import Categories from "categories.js";
 
 const Articles = connection.define('Articles', {
   title: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false
   },
-  description: {
+  slug: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  body: {
     type: Sequelize.TEXT,
     allowNull: false
   }
-});
+}).begins(Categories)
 
-Answers.sync({force: false});
+Articles.sync({force: false});
 
 export default Answers;

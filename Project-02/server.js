@@ -3,7 +3,9 @@ import { Sequelize } from "sequelize";
 import bodyParser from "body-parser";
 import 'dotenv/config';
 import { default as articleRoutes } from "./routes/articles.js";
+import Articles from "./db/articles";
 import { default as categoryRoutes } from "./routes/categories.js";
+import Categories from "./db/categories.js";
 
 import conn from "./db/conn.js";
 conn.authenticate()
